@@ -66,6 +66,17 @@ body {
   transform: skewX(-4deg);
 }
 
+/* Scoped sweep-in for the hero's highlighted word only — other .marker
+   usages elsewhere on the page are untouched since they lack this class. */
+.marker.hero-marker::after {
+  transform: skewX(-4deg) scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+.marker.hero-marker.marker-in::after {
+  transform: skewX(-4deg) scaleX(1);
+}
+
 /* Infinite marquee for the tech-stack strip */
 @keyframes marquee-scroll {
   0% {
@@ -185,6 +196,22 @@ body {
   animation: ring-pulse 3.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
 }
 
+/* Replays whenever its DOM node remounts — used on keyed elements (e.g.
+   skill-panel title/description) so switching tabs animates the swap. */
+@keyframes fade-swap-in {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-swap {
+  animation: fade-swap-in 0.4s ease-out both;
+}
+
 /* Badge circles breathing — "small circles becoming large" around the avatar */
 @keyframes pulse-grow {
   0%,
@@ -225,7 +252,8 @@ body {
   .orbit-spin-reverse,
   .ring-pulse,
   .pulse-grow,
-  .drift-fade {
+  .drift-fade,
+  .fade-swap {
     animation: none !important;
   }
   html {

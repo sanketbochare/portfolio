@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useReveal } from "../Reveal";
 import { CONTACT } from "../data";
-import profileImg from "/profile.jpeg";
+import profileImg from "./profile.jpeg";
 
 function useCountUp(target, duration = 1600, active = true) {
   const [value, setValue] = useState(0);
@@ -82,8 +82,8 @@ function AvatarOrbit() {
       />
 
       <div
-        className="float-soft relative mx-auto aspect-square w-full"
-        style={{ maxWidth: "clamp(260px, 34vw, 380px)" }}
+        className="float-soft group/avatar relative mx-auto aspect-square w-full transition-transform duration-500 ease-out hover:scale-[1.03]"
+        style={{ maxWidth: "clamp(300px, 42vw, 460px)" }}
       >
         {/* Static faint ring for reference, plus outward-pulsing "sonar" ripples */}
         <div className="absolute inset-0 rounded-full border border-dashed border-ink/10" />
@@ -113,8 +113,12 @@ function AvatarOrbit() {
         ))}
 
         {/* Center circle — your photo, imported from src/components/profile.jpeg */}
-        <div className="absolute left-1/2 top-1/2 z-10 h-[52%] w-[52%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-ink shadow-[0_24px_60px_-20px_rgba(18,18,16,0.55)] ring-[6px] ring-paper">
-          <img src={profileImg} alt="Sanket Bochare" className="h-full w-full object-cover" />
+        <div className="absolute left-1/2 top-1/2 z-10 h-[58%] w-[58%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-ink shadow-[0_24px_60px_-20px_rgba(18,18,16,0.55)] ring-[6px] ring-paper">
+          <img
+            src={profileImg}
+            alt="Sanket Bochare"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover/avatar:scale-110"
+          />
         </div>
 
         {/* Orbiting icon badges, pulsing — "growing" circles around the center */}
@@ -125,8 +129,8 @@ function AvatarOrbit() {
             style={{
               top,
               left,
-              width: `clamp(34px, ${(size / 380) * 100}%, ${size}px)`,
-              height: `clamp(34px, ${(size / 380) * 100}%, ${size}px)`,
+              width: `clamp(36px, ${(size / 460) * 100}%, ${size}px)`,
+              height: `clamp(36px, ${(size / 460) * 100}%, ${size}px)`,
               backgroundColor: bg,
               animationDelay: delay,
             }}
@@ -149,49 +153,81 @@ export default function Hero() {
 
       <div className="relative mx-auto max-w-6xl px-5 pb-16 pt-16 md:px-8 md:pb-24 md:pt-24">
         <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
-          <div
-            className="transition-all duration-1000 ease-out"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0px)" : "translateY(20px)",
-            }}
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-1.5 font-mono text-[11px] tracking-[0.14em] text-ink-soft">
+          <div className="order-2 lg:order-1">
+            <span
+              className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-1.5 font-mono text-[11px] tracking-[0.14em] text-ink-soft transition-all duration-700 ease-out"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0px)" : "translateY(16px)",
+                transitionDelay: "0ms",
+              }}
+            >
               <span className="h-1.5 w-1.5 rounded-full bg-yellow" />
               FRONTEND-FIRST ENGINEER
             </span>
 
-            <h1 className="mt-7 max-w-xl font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-ink sm:text-5xl md:text-6xl">
+            <h1
+              className="mt-7 max-w-xl font-display text-4xl font-extrabold leading-[1.06] tracking-tight text-ink transition-all duration-700 ease-out sm:text-5xl md:text-6xl"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0px)" : "translateY(20px)",
+                transitionDelay: "120ms",
+              }}
+            >
               I build interfaces
               <br />
-              people <span className="marker">actually enjoy</span> using.
+              people{" "}
+              <span className={`marker hero-marker ${visible ? "marker-in" : ""}`}>
+                actually enjoy
+              </span>{" "}
+              using.
             </h1>
 
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-ink-soft md:text-lg">
+            <p
+              className="mt-6 max-w-lg text-base leading-relaxed text-ink-soft transition-all duration-700 ease-out md:text-lg"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0px)" : "translateY(20px)",
+                transitionDelay: "240ms",
+              }}
+            >
               React developer with a systems-engineering brain — from
               FinTech dashboards to sensors talking to the cloud. Now
               looking for a frontend team that ships fast and cares about
               craft.
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-4">
+            <div
+              className="mt-9 flex flex-wrap items-center gap-4 transition-all duration-700 ease-out"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0px)" : "translateY(20px)",
+                transitionDelay: "360ms",
+              }}
+            >
               <a
                 href="#work"
-                className="group flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 font-mono text-xs font-semibold tracking-wide text-paper transition-all duration-300 ease-out hover:bg-yellow hover:text-ink"
+                className="group flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 font-mono text-xs font-semibold tracking-wide text-paper transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-yellow hover:text-ink hover:shadow-[0_10px_24px_-8px_rgba(18,18,16,0.35)]"
               >
                 See My Work
                 <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href={`mailto:${CONTACT.email}?subject=Frontend%20Developer%20Opportunity`}
-                className="rounded-full border border-ink/15 bg-white px-6 py-3.5 font-mono text-xs font-semibold tracking-wide text-ink transition-all duration-300 ease-out hover:border-ink"
+                className="rounded-full border border-ink/15 bg-white px-6 py-3.5 font-mono text-xs font-semibold tracking-wide text-ink transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-ink hover:shadow-[0_10px_24px_-8px_rgba(18,18,16,0.15)]"
               >
                 Get In Touch
               </a>
             </div>
           </div>
 
-          <div className="flex justify-center lg:justify-end">
+          <div
+            className="order-1 flex justify-center transition-all duration-700 ease-out lg:order-2 lg:justify-end"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "scale(1)" : "scale(0.92)",
+            }}
+          >
             <AvatarOrbit />
           </div>
         </div>

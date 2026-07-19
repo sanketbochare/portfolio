@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import Reveal, { useReveal } from "../Reveal";
 import { SKILL_GROUPS } from "../data";
 
-function SkillBar({ name, level, delay }) {
+function SkillBar({ name, level, delay, active }) {
   const [filled, setFilled] = useState(false);
 
   useEffect(() => {
+    if (!active) return;
     const t = setTimeout(() => setFilled(true), 40 + delay);
     return () => clearTimeout(t);
-  }, [delay]);
+  }, [active, delay]);
 
   return (
-    <div>
+    <div className="transition-transform duration-300 ease-out hover:-translate-y-0.5">
       <div className="flex items-baseline justify-between gap-4">
         <span className="text-sm font-medium text-ink">{name}</span>
         <span className="font-mono text-xs text-ink-faint">{level}%</span>
@@ -28,7 +29,7 @@ function SkillBar({ name, level, delay }) {
 
 export default function Skills() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const [ref] = useReveal();
+  const [ref, visible] = useReveal();
   const group = SKILL_GROUPS[activeIdx];
 
   return (
@@ -47,17 +48,24 @@ export default function Skills() {
           </p>
         </Reveal>
 
-        <div ref={ref} className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-[260px_1fr]">
+        <div
+          ref={ref}
+          className="mt-12 grid grid-cols-1 gap-6 transition-all duration-700 ease-out lg:grid-cols-[260px_1fr]"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0px)" : "translateY(24px)",
+          }}
+        >
           <div className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0">
             {SKILL_GROUPS.map((g, i) => (
               <button
                 key={g.kind}
                 type="button"
                 onClick={() => setActiveIdx(i)}
-                className={`flex shrink-0 items-center justify-between gap-3 rounded-full px-4 py-3 text-left font-mono text-xs tracking-wide transition-all duration-300 lg:rounded-2xl ${
+                className={`flex shrink-0 items-center justify-between gap-3 rounded-full px-4 py-3 text-left font-mono text-xs tracking-wide transition-all duration-300 hover:-translate-y-0.5 lg:rounded-2xl ${
                   activeIdx === i
                     ? "bg-ink text-paper shadow-[0_10px_24px_-8px_rgba(18,18,16,0.35)]"
-                    : "bg-white text-ink-soft hover:text-ink"
+                    : "bg-white text-ink-soft hover:text-ink hover:shadow-[0_6px_16px_-8px_rgba(18,18,16,0.18)]"
                 }`}
               >
                 {g.kind}
@@ -72,9 +80,11 @@ export default function Skills() {
             ))}
           </div>
 
-          <div className="rounded-3xl bg-white p-6 shadow-[0_2px_24px_-6px_rgba(18,18,16,0.1)] md:p-9">
-            <h3 className="font-display text-2xl font-bold text-ink">{group.title}</h3>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
+          <div className="rounded-3xl bg-white p-6 shadow-[0_2px_24px_-6px_rgba(18,18,16,0.1)] transition-shadow duration-300 md:p-9">
+            <h3 key={`title-${activeIdx}`} className="fade-swap font-display text-2xl font-bold text-ink">
+              {group.title}
+            </h3>
+            <p key={`desc-${activeIdx}`} className="fade-swap mt-2 max-w-xl text-sm leading-relaxed text-ink-soft">
               {group.description}
             </p>
             <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -84,6 +94,7 @@ export default function Skills() {
                   name={item.name}
                   level={item.level}
                   delay={i * 90}
+                  active={visible}
                 />
               ))}
             </div>

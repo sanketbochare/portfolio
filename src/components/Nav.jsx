@@ -48,9 +48,10 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="font-mono text-xs tracking-wide text-ink-soft transition-colors duration-300 hover:text-ink"
+              className="group relative font-mono text-xs tracking-wide text-ink-soft transition-colors duration-300 hover:text-ink"
             >
               {l.label}
+              <span className="absolute -bottom-1 left-0 h-[1.5px] w-0 bg-yellow transition-all duration-300 ease-out group-hover:w-full" />
             </a>
           ))}
         </nav>

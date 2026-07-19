@@ -14,7 +14,7 @@ function ProjectVisual({ name, accent, index, featured }) {
 
   return (
     <div
-      className={`relative flex w-full items-center justify-center overflow-hidden rounded-2xl ${
+      className={`relative flex w-full items-center justify-center overflow-hidden rounded-2xl transition-transform duration-500 ease-out group-hover:scale-[1.03] ${
         featured ? "aspect-[4/3] md:aspect-auto md:h-full md:min-h-[280px]" : "aspect-[16/10]"
       }`}
       style={{ backgroundColor: `${accent}12` }}
@@ -59,7 +59,7 @@ function CaseStudyCard({ project, delay }) {
   return (
     <Reveal delay={delay} className={`group h-full ${project.featured ? "md:col-span-2" : ""}`}>
       <article
-        className={`flex h-full flex-col gap-6 rounded-3xl bg-white p-5 shadow-[0_2px_20px_-8px_rgba(18,18,16,0.1)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_36px_-12px_rgba(18,18,16,0.22)] md:p-6 ${
+        className={`flex h-full flex-col gap-6 rounded-3xl bg-white p-5 shadow-[0_2px_20px_-8px_rgba(18,18,16,0.1)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-[0_16px_36px_-12px_rgba(18,18,16,0.22)] md:p-6 ${
           project.featured ? "md:flex-row-reverse md:items-stretch" : ""
         }`}
       >
