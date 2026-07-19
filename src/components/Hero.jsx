@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useReveal } from "../Reveal";
 import { CONTACT } from "../data";
-import profileImg from "./profile.jpeg";
+import profileImg from "/profile.jpeg";
 
 function useCountUp(target, duration = 1600, active = true) {
   const [value, setValue] = useState(0);
