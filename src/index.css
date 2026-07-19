@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-paper: #f8f6f0;
+  --color-paper-alt: #f1ede2;
+  --color-ink: #121210;
+  --color-ink-soft: #59564c;
+  --color-ink-faint: #9d9788;
+  --color-line: #12121014;
+  --color-yellow: #ffd400;
+  --color-yellow-soft: #fff1b8;
+  --color-white: #ffffff;
+}
+
+html {
+  background-color: #f8f6f0;
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f8f6f0;
+  color: #121210;
+}
+
+::selection {
+  background: #ffd400;
+  color: #121210;
+}
+
+:focus-visible {
+  outline: 2px solid #121210;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Faint dotted paper texture, kept subtle — a wash, not a grid */
+.dot-grid {
+  background-image: radial-gradient(#12121017 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.dot-grid-fade {
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+}
+
+/* Highlighter marker swept under a single key word — used once per section, deliberately */
+.marker {
+  position: relative;
+  white-space: nowrap;
+  z-index: 0;
+}
+.marker::after {
+  content: "";
+  position: absolute;
+  left: -0.06em;
+  right: -0.06em;
+  bottom: 0.06em;
+  height: 0.32em;
+  background: #ffd400;
+  z-index: -1;
+  transform: skewX(-4deg);
+}
+
+/* Infinite marquee for the tech-stack strip */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee-scroll 30s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Counter-direction ribbon strip under the hero */
+@keyframes ribbon-scroll {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.ribbon-track {
+  animation: ribbon-scroll 26s linear infinite;
+}
+
+/* Blinking terminal cursor for the hero code panel */
+@keyframes caret-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.caret {
+  animation: caret-blink 1s step-end infinite;
+}
+
+/* Slow ambient float for the hero panel + decorative blobs */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+@keyframes float-slower {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, -14px);
+  }
+}
+.float-slower {
+  animation: float-slower 11s ease-in-out infinite;
+}
+
+/* Soft blurred color blobs — the one "modern art" flourish, used sparingly */
+.blob {
+  border-radius: 999px;
+  filter: blur(48px);
+  opacity: 0.55;
+}
+
+/* Hero avatar orbit — dashed rings drifting slowly around the profile photo */
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.orbit-spin {
+  animation: orbit-spin 60s linear infinite;
+}
+@keyframes orbit-spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.orbit-spin-reverse {
+  animation: orbit-spin-reverse 46s linear infinite;
+}
+
+/* Thin rings pulsing outward from the avatar, like a radar ping */
+@keyframes ring-pulse {
+  0% {
+    transform: scale(0.75);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+.ring-pulse {
+  animation: ring-pulse 3.6s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+/* Badge circles breathing — "small circles becoming large" around the avatar */
+@keyframes pulse-grow {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.22);
+  }
+}
+.pulse-grow {
+  animation: pulse-grow 3.4s ease-in-out infinite;
+}
+
+/* Tiny background specks drifting near the avatar */
+@keyframes drift-fade {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(6px, -10px);
+    opacity: 1;
+  }
+}
+.drift-fade {
+  animation: drift-fade 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .ribbon-track,
+  .caret,
+  .float-soft,
+  .float-slower,
+  .orbit-spin,
+  .orbit-spin-reverse,
+  .ring-pulse,
+  .pulse-grow,
+  .drift-fade {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
